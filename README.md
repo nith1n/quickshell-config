@@ -2,6 +2,9 @@
 
 A clean status bar and panel configuration for **Quickshell** running on **Hyprland**, featuring dual sidebars and rounded fillet corners.
 
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/d5c616e9-5c59-4a7f-90e0-47630ca1c0f5" />
+
+
 ## Quick Start
 
 ### Option A: Use default config directory (Recommended)
