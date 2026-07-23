@@ -28,10 +28,10 @@ Scope {
             // Dynamic mask region to cover the trigger area, popup container, and both fillets
             mask: Region {
                 Region {
-                    x: popupWindow.width - Math.max(triggerArea.width, container.width + 12)
-                    y: popupWindow.height - Math.max(triggerArea.height, container.height + 12)
-                    width: Math.max(triggerArea.width, container.width + 12)
-                    height: Math.max(triggerArea.height, container.height + 12)
+                    x: popupWindow.width - Math.max(triggerArea.width, container.width + Theme.rightSidebarWidth + Theme.popupRadius)
+                    y: popupWindow.height - Math.max(triggerArea.height, container.height + Theme.bottomBarHeight + Theme.popupRadius)
+                    width: Math.max(triggerArea.width, container.width + Theme.rightSidebarWidth + Theme.popupRadius)
+                    height: Math.max(triggerArea.height, container.height + Theme.bottomBarHeight + Theme.popupRadius)
                 }
             }
 
@@ -53,10 +53,10 @@ Scope {
             // Bottom-left corner fillet (slides horizontally with the popup)
             Canvas {
                 id: bottomLeftFillet
-                x: container.x - 4
-                y: popupWindow.height - 12
-                width: 4
-                height: 4
+                x: container.x - Theme.popupRadius
+                y: popupWindow.height - Theme.bottomBarHeight - Theme.popupRadius
+                width: Theme.popupRadius
+                height: Theme.popupRadius
                 
                 opacity: triggerArea.active ? 1.0 : 0.0
                 Behavior on opacity {
@@ -68,10 +68,10 @@ Scope {
                     ctx.reset();
                     ctx.fillStyle = Theme.barBg;
                     ctx.beginPath();
-                    ctx.moveTo(4, 0);
-                    ctx.lineTo(4, 4);
-                    ctx.lineTo(0, 4);
-                    ctx.arc(0, 0, 4, Math.PI / 2, 0, true);
+                    ctx.moveTo(Theme.popupRadius, 0);
+                    ctx.lineTo(Theme.popupRadius, Theme.popupRadius);
+                    ctx.lineTo(0, Theme.popupRadius);
+                    ctx.arc(0, 0, Theme.popupRadius, Math.PI / 2, 0, true);
                     ctx.closePath();
                     ctx.fill();
                 }
@@ -80,10 +80,10 @@ Scope {
             // Top-right corner fillet (slides vertically with the popup)
             Canvas {
                 id: topRightFillet
-                x: popupWindow.width - 12
-                y: container.y - 4
-                width: 4
-                height: 4
+                x: popupWindow.width - Theme.rightSidebarWidth - Theme.popupRadius
+                y: container.y - Theme.popupRadius
+                width: Theme.popupRadius
+                height: Theme.popupRadius
                 
                 opacity: triggerArea.active ? 1.0 : 0.0
                 Behavior on opacity {
@@ -95,10 +95,10 @@ Scope {
                     ctx.reset();
                     ctx.fillStyle = Theme.barBg;
                     ctx.beginPath();
-                    ctx.moveTo(4, 0);
-                    ctx.lineTo(4, 4);
-                    ctx.lineTo(0, 4);
-                    ctx.arc(0, 0, 4, Math.PI / 2, 0, true);
+                    ctx.moveTo(Theme.popupRadius, 0);
+                    ctx.lineTo(Theme.popupRadius, Theme.popupRadius);
+                    ctx.lineTo(0, Theme.popupRadius);
+                    ctx.arc(0, 0, Theme.popupRadius, Math.PI / 2, 0, true);
                     ctx.closePath();
                     ctx.fill();
                 }
@@ -110,9 +110,9 @@ Scope {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
                 
-                // Offset from screen edges by 8px (to align perfectly with the border lines)
-                anchors.rightMargin: 8
-                anchors.bottomMargin: 8
+                // Dynamic offsets to align perfectly with the border lines based on sidebar and bottom bar dimensions
+                anchors.rightMargin: Theme.rightSidebarWidth
+                anchors.bottomMargin: Theme.bottomBarHeight
                 
                 // Dynamic dimensions driven by the trigger state
                 width: triggerArea.active ? 160 : 0
@@ -133,11 +133,11 @@ Scope {
                     x: 0
                     y: 0
                     // Overflows the container to push bottom and right rounded corners outside the clipped area
-                    width: parent.width + 10
-                    height: parent.height + 10
+                    width: parent.width + 20
+                    height: parent.height + 20
 
                     // Rounded top-left corner
-                    radius: 8
+                    radius: Theme.popupRadius
                     color: Theme.barBg // Matches the bar background color exactly
                 }
 

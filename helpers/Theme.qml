@@ -23,4 +23,14 @@ QtObject {
     // Sizes
     readonly property real fontSize: 10
     readonly property real iconSize: 12
+
+    // Bar/Panel Dimensions
+    readonly property real topBarHeight: 36
+    readonly property real bottomBarHeight: 10
+    readonly property real leftSidebarWidth: 10
+    readonly property real rightSidebarWidth: 10
+
+    // Corner Fillet Radii
+    readonly property real filletRadius: 12
+    readonly property real popupRadius: 10
 }

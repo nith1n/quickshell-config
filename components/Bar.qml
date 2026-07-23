@@ -20,8 +20,8 @@ Scope {
                 right: true
             }
 
-            implicitHeight: 48 // 36px bar + 12px corner radius
-            exclusiveZone: 36  // Reserve 36px space at the top of the screen
+            implicitHeight: Theme.topBarHeight + Theme.filletRadius
+            exclusiveZone: Theme.topBarHeight
             color: "transparent"
 
             // Define the clickthrough mask region
@@ -31,21 +31,21 @@ Scope {
                         x: 0
                         y: 0
                         width: topBarWindow.width
-                        height: 36
+                        height: Theme.topBarHeight
                     },
                     Region {
-                        // Left corner fillet (aligned with right edge of 8px sidebar)
-                        x: 8
-                        y: 36
-                        width: 12
-                        height: 12
+                        // Left corner fillet (aligned with right edge of left sidebar)
+                        x: Theme.leftSidebarWidth
+                        y: Theme.topBarHeight
+                        width: Theme.filletRadius
+                        height: Theme.filletRadius
                     },
                     Region {
-                        // Right corner fillet (aligned with left edge of 8px sidebar)
-                        x: topBarWindow.width - 20
-                        y: 36
-                        width: 12
-                        height: 12
+                        // Right corner fillet (aligned with left edge of right sidebar)
+                        x: topBarWindow.width - Theme.rightSidebarWidth - Theme.filletRadius
+                        y: Theme.topBarHeight
+                        width: Theme.filletRadius
+                        height: Theme.filletRadius
                     }
                 ]
             }
@@ -56,27 +56,27 @@ Scope {
                 x: 0
                 y: 0
                 width: topBarWindow.width
-                height: 36
+                height: Theme.topBarHeight
                 color: Theme.barBg
             }
 
             // Left corner fillet connecting top-bar and left sidebar
             Canvas {
                 id: leftFillet
-                x: 8
-                y: 36
-                width: 12
-                height: 12
+                x: Theme.leftSidebarWidth
+                y: Theme.topBarHeight
+                width: Theme.filletRadius
+                height: Theme.filletRadius
 
                 onPaint: {
                     var ctx = getContext("2d");
                     ctx.reset();
                     ctx.fillStyle = Theme.barBg;
                     ctx.beginPath();
-                    ctx.moveTo(0, 12);
+                    ctx.moveTo(0, Theme.filletRadius);
                     ctx.lineTo(0, 0);
-                    ctx.lineTo(12, 0);
-                    ctx.arc(12, 12, 12, -Math.PI / 2, Math.PI, true);
+                    ctx.lineTo(Theme.filletRadius, 0);
+                    ctx.arc(Theme.filletRadius, Theme.filletRadius, Theme.filletRadius, -Math.PI / 2, Math.PI, true);
                     ctx.closePath();
                     ctx.fill();
                 }
@@ -85,10 +85,10 @@ Scope {
             // Right corner fillet connecting top-bar and right sidebar
             Canvas {
                 id: rightFillet
-                x: topBarWindow.width - 20
-                y: 36
-                width: 12
-                height: 12
+                x: topBarWindow.width - Theme.rightSidebarWidth - Theme.filletRadius
+                y: Theme.topBarHeight
+                width: Theme.filletRadius
+                height: Theme.filletRadius
 
                 onPaint: {
                     var ctx = getContext("2d");
@@ -96,9 +96,9 @@ Scope {
                     ctx.fillStyle = Theme.barBg;
                     ctx.beginPath();
                     ctx.moveTo(0, 0);
-                    ctx.lineTo(12, 0);
-                    ctx.lineTo(12, 12);
-                    ctx.arc(0, 12, 12, 0, -Math.PI / 2, true);
+                    ctx.lineTo(Theme.filletRadius, 0);
+                    ctx.lineTo(Theme.filletRadius, Theme.filletRadius);
+                    ctx.arc(0, Theme.filletRadius, Theme.filletRadius, 0, -Math.PI / 2, true);
                     ctx.closePath();
                     ctx.fill();
                 }
