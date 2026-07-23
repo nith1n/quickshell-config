@@ -18,8 +18,8 @@ Scope {
                 right: true
             }
 
-            implicitHeight: 20 // 8px bar + 12px corner radius
-            exclusiveZone: 8   // Reserve 8px space at the bottom of the screen
+            implicitHeight: Theme.bottomBarHeight + Theme.filletRadius
+            exclusiveZone: Theme.bottomBarHeight
             color: "transparent"
 
             // Define the clickthrough mask region
@@ -27,23 +27,23 @@ Scope {
                 regions: [
                     Region {
                         x: 0
-                        y: 12
+                        y: Theme.filletRadius
                         width: bottomBarWindow.width
-                        height: 8
+                        height: Theme.bottomBarHeight
                     },
                     Region {
                         // Left corner fillet
                         x: 0
                         y: 0
-                        width: 12
-                        height: 12
+                        width: Theme.filletRadius
+                        height: Theme.filletRadius
                     },
                     Region {
                         // Right corner fillet
-                        x: bottomBarWindow.width - 12
+                        x: bottomBarWindow.width - Theme.filletRadius
                         y: 0
-                        width: 12
-                        height: 12
+                        width: Theme.filletRadius
+                        height: Theme.filletRadius
                     }
                 ]
             }
@@ -52,9 +52,9 @@ Scope {
             Rectangle {
                 id: barBackground
                 x: 0
-                y: 12
+                y: Theme.filletRadius
                 width: bottomBarWindow.width
-                height: 8
+                height: Theme.bottomBarHeight
                 color: Theme.barBg
             }
 
@@ -63,8 +63,8 @@ Scope {
                 id: leftFillet
                 x: 0
                 y: 0
-                width: 12
-                height: 12
+                width: Theme.filletRadius
+                height: Theme.filletRadius
 
                 onPaint: {
                     var ctx = getContext("2d");
@@ -72,9 +72,9 @@ Scope {
                     ctx.fillStyle = Theme.barBg;
                     ctx.beginPath();
                     ctx.moveTo(0, 0);
-                    ctx.lineTo(0, 12);
-                    ctx.lineTo(12, 12);
-                    ctx.arc(12, 0, 12, Math.PI / 2, Math.PI, false);
+                    ctx.lineTo(0, Theme.filletRadius);
+                    ctx.lineTo(Theme.filletRadius, Theme.filletRadius);
+                    ctx.arc(Theme.filletRadius, 0, Theme.filletRadius, Math.PI / 2, Math.PI, false);
                     ctx.closePath();
                     ctx.fill();
                 }
@@ -83,20 +83,20 @@ Scope {
             // Bottom-right corner fillet connecting bottom-bar and right sidebar
             Canvas {
                 id: rightFillet
-                x: bottomBarWindow.width - 12
+                x: bottomBarWindow.width - Theme.filletRadius
                 y: 0
-                width: 12
-                height: 12
+                width: Theme.filletRadius
+                height: Theme.filletRadius
 
                 onPaint: {
                     var ctx = getContext("2d");
                     ctx.reset();
                     ctx.fillStyle = Theme.barBg;
                     ctx.beginPath();
-                    ctx.moveTo(12, 0);
-                    ctx.lineTo(12, 12);
-                    ctx.lineTo(0, 12);
-                    ctx.arc(0, 0, 12, Math.PI / 2, 0, true);
+                    ctx.moveTo(Theme.filletRadius, 0);
+                    ctx.lineTo(Theme.filletRadius, Theme.filletRadius);
+                    ctx.lineTo(0, Theme.filletRadius);
+                    ctx.arc(0, 0, Theme.filletRadius, Math.PI / 2, 0, true);
                     ctx.closePath();
                     ctx.fill();
                 }

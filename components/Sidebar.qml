@@ -17,9 +17,9 @@ Scope {
                 bottom: true
             }
 
-            implicitWidth: 8
+            implicitWidth: Theme.leftSidebarWidth
             color: Theme.barBg
-            exclusiveZone: 8
+            exclusiveZone: Theme.leftSidebarWidth
         }
     }
 }
