@@ -123,11 +123,21 @@ Rectangle {
         acceptedButtons: Qt.LeftButton
         onClicked: muteProc.running = true
         
+        property int scrollAccumulator: 0
         onWheel: (wheel) => {
-            if (wheel.angleDelta.y > 0) {
+            if ((wheel.angleDelta.y > 0 && scrollAccumulator < 0) || 
+                (wheel.angleDelta.y < 0 && scrollAccumulator > 0)) {
+                scrollAccumulator = 0;
+            }
+            scrollAccumulator += wheel.angleDelta.y;
+            
+            const threshold = 120; // standard scroll tick (increase for slower scroll)
+            if (scrollAccumulator >= threshold) {
                 volUpProc.running = true;
-            } else if (wheel.angleDelta.y < 0) {
+                scrollAccumulator = 0;
+            } else if (scrollAccumulator <= -threshold) {
                 volDownProc.running = true;
+                scrollAccumulator = 0;
             }
         }
 
