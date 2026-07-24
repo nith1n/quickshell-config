@@ -76,7 +76,7 @@ Rectangle {
         spacing: 6
 
         SvgIcon {
-            source: "../icons/cpu.svg"
+            source: "../icons/memory.svg"
             color: Theme.accent
             anchors.verticalCenter: parent.verticalCenter
         }
