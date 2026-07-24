@@ -22,7 +22,7 @@ QtObject {
 
     // Sizes
     readonly property real fontSize: 10
-    readonly property real iconSize: 12
+    readonly property real iconSize: 14
 
     // Bar/Panel Dimensions
     readonly property real topBarHeight: 36
