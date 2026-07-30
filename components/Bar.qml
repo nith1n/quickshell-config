@@ -61,47 +61,23 @@ Scope {
             }
 
             // Left corner fillet connecting top-bar and left sidebar
-            Canvas {
+            Fillet {
                 id: leftFillet
+                corner: "top-left"
                 x: Theme.leftSidebarWidth
                 y: Theme.topBarHeight
-                width: Theme.filletRadius
-                height: Theme.filletRadius
-
-                onPaint: {
-                    var ctx = getContext("2d");
-                    ctx.reset();
-                    ctx.fillStyle = Theme.barBg;
-                    ctx.beginPath();
-                    ctx.moveTo(0, Theme.filletRadius);
-                    ctx.lineTo(0, 0);
-                    ctx.lineTo(Theme.filletRadius, 0);
-                    ctx.arc(Theme.filletRadius, Theme.filletRadius, Theme.filletRadius, -Math.PI / 2, Math.PI, true);
-                    ctx.closePath();
-                    ctx.fill();
-                }
+                radius: Theme.filletRadius
+                color: Theme.barBg
             }
 
             // Right corner fillet connecting top-bar and right sidebar
-            Canvas {
+            Fillet {
                 id: rightFillet
+                corner: "top-right"
                 x: topBarWindow.width - Theme.rightSidebarWidth - Theme.filletRadius
                 y: Theme.topBarHeight
-                width: Theme.filletRadius
-                height: Theme.filletRadius
-
-                onPaint: {
-                    var ctx = getContext("2d");
-                    ctx.reset();
-                    ctx.fillStyle = Theme.barBg;
-                    ctx.beginPath();
-                    ctx.moveTo(0, 0);
-                    ctx.lineTo(Theme.filletRadius, 0);
-                    ctx.lineTo(Theme.filletRadius, Theme.filletRadius);
-                    ctx.arc(0, Theme.filletRadius, Theme.filletRadius, 0, -Math.PI / 2, true);
-                    ctx.closePath();
-                    ctx.fill();
-                }
+                radius: Theme.filletRadius
+                color: Theme.barBg
             }
 
             Row {
