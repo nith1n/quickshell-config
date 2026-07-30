@@ -46,8 +46,14 @@ Item {
                 color: haveWindows && !active ? Theme.pillBg : "transparent"
                 border.width: 0
 
-                // Synchronize activeIndicator position on workspace switch
+                // Synchronize activeIndicator position on workspace switch or layout positioning
                 onActiveChanged: {
+                    if (active) {
+                        activeIndicator.x = ws.x
+                    }
+                }
+
+                onXChanged: {
                     if (active) {
                         activeIndicator.x = ws.x
                     }
