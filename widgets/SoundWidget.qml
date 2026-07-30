@@ -85,9 +85,9 @@ Rectangle {
     }
 
     // Widget Dimensions & Styling
-    width: soundRow.implicitWidth + 28
-    height: 22
-    radius: 11
+    width: soundRow.implicitWidth + Theme.pillPadding
+    height: Theme.pillHeight
+    radius: Theme.pillRadius
     color: Theme.pillBg
 
     Behavior on color {
@@ -98,7 +98,7 @@ Rectangle {
     Row {
         id: soundRow
         anchors.centerIn: parent
-        spacing: 6
+        spacing: Theme.pillSpacing
 
         SvgIcon {
             source: soundPill.getVolumeIcon(soundPill.volume, soundPill.isMuted)
@@ -122,15 +122,15 @@ Rectangle {
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton
         onClicked: muteProc.running = true
-        
+
         property int scrollAccumulator: 0
         onWheel: (wheel) => {
-            if ((wheel.angleDelta.y > 0 && scrollAccumulator < 0) || 
+            if ((wheel.angleDelta.y > 0 && scrollAccumulator < 0) ||
                 (wheel.angleDelta.y < 0 && scrollAccumulator > 0)) {
                 scrollAccumulator = 0;
             }
             scrollAccumulator += wheel.angleDelta.y;
-            
+
             const threshold = 120; // standard scroll tick (increase for slower scroll)
             if (scrollAccumulator >= threshold) {
                 volUpProc.running = true;

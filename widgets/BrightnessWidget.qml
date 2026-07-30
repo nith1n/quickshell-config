@@ -71,9 +71,9 @@ Rectangle {
     }
 
     // Widget Dimensions & Styling
-    width: brightnessRow.implicitWidth + 28
-    height: 22
-    radius: 11
+    width: brightnessRow.implicitWidth + Theme.pillPadding
+    height: Theme.pillHeight
+    radius: Theme.pillRadius
     color: Theme.pillBg
 
     Behavior on color {
@@ -84,7 +84,7 @@ Rectangle {
     Row {
         id: brightnessRow
         anchors.centerIn: parent
-        spacing: 6
+        spacing: Theme.pillSpacing
 
         SvgIcon {
             source: "../icons/sun.svg"
