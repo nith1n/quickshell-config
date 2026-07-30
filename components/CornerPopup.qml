@@ -51,56 +51,32 @@ Scope {
             }
 
             // Bottom-left corner fillet (slides horizontally with the popup)
-            Canvas {
+            Fillet {
                 id: bottomLeftFillet
+                corner: "bottom-right"
                 x: container.x - Theme.popupRadius
                 y: popupWindow.height - Theme.bottomBarHeight - Theme.popupRadius
-                width: Theme.popupRadius
-                height: Theme.popupRadius
+                radius: Theme.popupRadius
+                color: Theme.barBg
                 
                 opacity: triggerArea.active ? 1.0 : 0.0
                 Behavior on opacity {
                     NumberAnimation { duration: 150 }
-                }
-
-                onPaint: {
-                    var ctx = getContext("2d");
-                    ctx.reset();
-                    ctx.fillStyle = Theme.barBg;
-                    ctx.beginPath();
-                    ctx.moveTo(Theme.popupRadius, 0);
-                    ctx.lineTo(Theme.popupRadius, Theme.popupRadius);
-                    ctx.lineTo(0, Theme.popupRadius);
-                    ctx.arc(0, 0, Theme.popupRadius, Math.PI / 2, 0, true);
-                    ctx.closePath();
-                    ctx.fill();
                 }
             }
 
             // Top-right corner fillet (slides vertically with the popup)
-            Canvas {
+            Fillet {
                 id: topRightFillet
+                corner: "bottom-right"
                 x: popupWindow.width - Theme.rightSidebarWidth - Theme.popupRadius
                 y: container.y - Theme.popupRadius
-                width: Theme.popupRadius
-                height: Theme.popupRadius
+                radius: Theme.popupRadius
+                color: Theme.barBg
                 
                 opacity: triggerArea.active ? 1.0 : 0.0
                 Behavior on opacity {
                     NumberAnimation { duration: 150 }
-                }
-
-                onPaint: {
-                    var ctx = getContext("2d");
-                    ctx.reset();
-                    ctx.fillStyle = Theme.barBg;
-                    ctx.beginPath();
-                    ctx.moveTo(Theme.popupRadius, 0);
-                    ctx.lineTo(Theme.popupRadius, Theme.popupRadius);
-                    ctx.lineTo(0, Theme.popupRadius);
-                    ctx.arc(0, 0, Theme.popupRadius, Math.PI / 2, 0, true);
-                    ctx.closePath();
-                    ctx.fill();
                 }
             }
 

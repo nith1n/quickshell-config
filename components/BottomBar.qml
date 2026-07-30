@@ -59,47 +59,23 @@ Scope {
             }
 
             // Bottom-left corner fillet connecting bottom-bar and left sidebar
-            Canvas {
+            Fillet {
                 id: leftFillet
+                corner: "bottom-left"
                 x: 0
                 y: 0
-                width: Theme.filletRadius
-                height: Theme.filletRadius
-
-                onPaint: {
-                    var ctx = getContext("2d");
-                    ctx.reset();
-                    ctx.fillStyle = Theme.barBg;
-                    ctx.beginPath();
-                    ctx.moveTo(0, 0);
-                    ctx.lineTo(0, Theme.filletRadius);
-                    ctx.lineTo(Theme.filletRadius, Theme.filletRadius);
-                    ctx.arc(Theme.filletRadius, 0, Theme.filletRadius, Math.PI / 2, Math.PI, false);
-                    ctx.closePath();
-                    ctx.fill();
-                }
+                radius: Theme.filletRadius
+                color: Theme.barBg
             }
 
             // Bottom-right corner fillet connecting bottom-bar and right sidebar
-            Canvas {
+            Fillet {
                 id: rightFillet
+                corner: "bottom-right"
                 x: bottomBarWindow.width - Theme.filletRadius
                 y: 0
-                width: Theme.filletRadius
-                height: Theme.filletRadius
-
-                onPaint: {
-                    var ctx = getContext("2d");
-                    ctx.reset();
-                    ctx.fillStyle = Theme.barBg;
-                    ctx.beginPath();
-                    ctx.moveTo(Theme.filletRadius, 0);
-                    ctx.lineTo(Theme.filletRadius, Theme.filletRadius);
-                    ctx.lineTo(0, Theme.filletRadius);
-                    ctx.arc(0, 0, Theme.filletRadius, Math.PI / 2, 0, true);
-                    ctx.closePath();
-                    ctx.fill();
-                }
+                radius: Theme.filletRadius
+                color: Theme.barBg
             }
         }
     }
