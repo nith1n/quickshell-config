@@ -2,29 +2,16 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Quickshell.Services.Pipewire
 import "../helpers"
 
 Rectangle {
     id: soundPill
 
-    // Properties
-    property int volume: 100
-    property bool isMuted: false
-
-    // Functions
-    function parseVolume(text) {
-        if (!text) return;
-        var s = text.trim();
-        // Format is "Volume: 1.00" or "Volume: 0.35 [MUTED]"
-        var parts = s.split(" ");
-        if (parts.length >= 2) {
-            var volVal = parseFloat(parts[1]);
-            if (!isNaN(volVal)) {
-                soundPill.volume = Math.round(volVal * 100);
-            }
-        }
-        soundPill.isMuted = s.includes("[MUTED]");
-    }
+    // Event-driven Pipewire properties
+    property var sink: Pipewire.defaultAudioSink
+    property bool isMuted: sink?.audio?.muted ?? false
+    property int volume: Math.round((sink?.audio?.volume ?? 0) * 100)
 
     function getVolumeIcon(vol, muted) {
         if (muted) return "../icons/volume-x.svg";
@@ -32,56 +19,20 @@ Rectangle {
         return "../icons/volume-1.svg";
     }
 
-    // Backend Helpers & Resources
-    Process {
-        id: volGetProc
-        command: ["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"]
-        running: true
-        stdout: StdioCollector {
-            onStreamFinished: soundPill.parseVolume(this.text)
-        }
-    }
-
-    // Persistent process listening to volume changes instantly via PulseAudio/PipeWire events
-    Process {
-        id: pactlSubscribe
-        command: ["pactl", "subscribe"]
-        running: true
-        stdout: SplitParser {
-            onRead: (line) => {
-                if (line.includes("change") && line.includes("sink")) {
-                    volGetProc.running = true
-                }
-            }
-        }
-    }
-
-    // Safety fallback timer (every 5 seconds)
-    Timer {
-        id: fallbackTimer
-        interval: 5000
-        running: true
-        repeat: true
-        onTriggered: volGetProc.running = true
-    }
-
-    // Processes for adjustments (limit to 150% via -l 1.5)
+    // Adjustment processes
     Process {
         id: volUpProc
         command: ["wpctl", "set-volume", "-l", "1.5", "@DEFAULT_AUDIO_SINK@", "5%+"]
-        onExited: volGetProc.running = true
     }
 
     Process {
         id: volDownProc
         command: ["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-"]
-        onExited: volGetProc.running = true
     }
 
     Process {
         id: muteProc
         command: ["wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle"]
-        onExited: volGetProc.running = true
     }
 
     // Widget Dimensions & Styling
@@ -122,15 +73,15 @@ Rectangle {
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton
         onClicked: muteProc.running = true
-
+        
         property int scrollAccumulator: 0
         onWheel: (wheel) => {
-            if ((wheel.angleDelta.y > 0 && scrollAccumulator < 0) ||
+            if ((wheel.angleDelta.y > 0 && scrollAccumulator < 0) || 
                 (wheel.angleDelta.y < 0 && scrollAccumulator > 0)) {
                 scrollAccumulator = 0;
             }
             scrollAccumulator += wheel.angleDelta.y;
-
+            
             const threshold = 120; // standard scroll tick (increase for slower scroll)
             if (scrollAccumulator >= threshold) {
                 volUpProc.running = true;
