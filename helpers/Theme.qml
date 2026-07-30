@@ -22,15 +22,29 @@ QtObject {
 
     // Sizes
     readonly property real fontSize: 10
-    readonly property real iconSize: 14
+    readonly property real iconSize: 18
 
     // Bar/Panel Dimensions
-    readonly property real topBarHeight: 36
+    readonly property real topBarHeight: 40
     readonly property real bottomBarHeight: 10
     readonly property real leftSidebarWidth: 10
     readonly property real rightSidebarWidth: 10
 
     // Corner Fillet Radii
     readonly property real filletRadius: 12
-    readonly property real popupRadius: 10
+    readonly property real popupRadius: 4
+
+    // Pill Dimensions
+    readonly property real pillHeight: 27
+    readonly property real pillRadius: 8
+    readonly property real pillPadding: 20
+    readonly property real pillSpacing: 3
+
+    // Workspace Dimensions
+    readonly property real wsSize: 20
+    readonly property real wsRadius: 8
+    readonly property real wsSpacing: 6
+
+    // Bar Layout Spacing
+    readonly property real widgetSpacing: 5
 }

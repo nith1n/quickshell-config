@@ -57,9 +57,9 @@ Rectangle {
     }
 
     // Widget Dimensions & Styling
-    width: batteryRow.implicitWidth + 28
-    height: 22
-    radius: 11
+    width: batteryRow.implicitWidth + Theme.pillPadding
+    height: Theme.pillHeight
+    radius: Theme.pillRadius
     color: Theme.pillBg
 
     Behavior on color {
@@ -70,7 +70,7 @@ Rectangle {
     Row {
         id: batteryRow
         anchors.centerIn: parent
-        spacing: 6
+        spacing: Theme.pillSpacing
 
         SvgIcon {
             source: batteryPill.getBatteryIcon(batteryPill.capacityText, batteryPill.statusText)

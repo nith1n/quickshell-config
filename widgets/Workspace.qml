@@ -4,16 +4,16 @@ import Quickshell.Hyprland
 import "../helpers"
 
 Row {
-    spacing: 6
+    spacing: Theme.wsSpacing
 
     Repeater {
         model: Hyprland.workspaces
 
         Rectangle {
             id: ws
-            width: 20
-            height: 20
-            radius: 10
+            width: Theme.wsSize
+            height: Theme.wsSize
+            radius: Theme.wsRadius
 
             property bool active: Hyprland.focusedWorkspace?.id === modelData.id
             property bool haveWindows: modelData.toplevels.values.length > 0

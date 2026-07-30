@@ -5,9 +5,9 @@ import "../helpers"
 
 Rectangle {
     id: clockPill
-    width: clockText.implicitWidth + icon.width + 28
-    height: 22
-    radius: 11
+    width: clockRow.implicitWidth + Theme.pillPadding
+    height: Theme.pillHeight
+    radius: Theme.pillRadius
     color: Theme.pillBg
 
     // Smooth hover transition
@@ -16,8 +16,9 @@ Rectangle {
     }
 
     Row {
+        id: clockRow
         anchors.centerIn: parent
-        spacing: 6
+        spacing: Theme.pillSpacing
 
         SvgIcon {
             id: icon

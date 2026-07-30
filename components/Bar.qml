@@ -119,7 +119,7 @@ Scope {
                 anchors.right: parent.right
                 anchors.rightMargin: 18
                 anchors.verticalCenter: barBackground.verticalCenter
-                spacing: 5
+                spacing: Theme.widgetSpacing
 
                 SoundWidget {}
                 BrightnessWidget {}

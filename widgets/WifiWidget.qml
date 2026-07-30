@@ -72,9 +72,9 @@ Rectangle {
     }
 
     // Widget Dimensions & Styling
-    width: wifiRow.implicitWidth + 28
-    height: 22
-    radius: 11
+    width: wifiRow.implicitWidth + Theme.pillPadding
+    height: Theme.pillHeight
+    radius: Theme.pillRadius
     color: Theme.pillBg
 
     Behavior on color {
@@ -85,7 +85,7 @@ Rectangle {
     Row {
         id: wifiRow
         anchors.centerIn: parent
-        spacing: 6
+        spacing: Theme.pillSpacing
 
         SvgIcon {
             source: wifiPill.getWifiIcon(wifiPill.status, wifiPill.signalStrength)

@@ -60,9 +60,9 @@ Rectangle {
     }
 
     // Widget Dimensions & Styling
-    width: memoryRow.implicitWidth + 28
-    height: 22
-    radius: 11
+    width: memoryRow.implicitWidth + Theme.pillPadding
+    height: Theme.pillHeight
+    radius: Theme.pillRadius
     color: Theme.pillBg
 
     Behavior on color {
@@ -73,7 +73,7 @@ Rectangle {
     Row {
         id: memoryRow
         anchors.centerIn: parent
-        spacing: 6
+        spacing: Theme.pillSpacing
 
         SvgIcon {
             source: "../icons/memory.svg"
