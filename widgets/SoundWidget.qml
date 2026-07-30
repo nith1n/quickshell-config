@@ -13,6 +13,10 @@ Rectangle {
     property bool isMuted: sink?.audio?.muted ?? false
     property int volume: Math.round((sink?.audio?.volume ?? 0) * 100)
 
+    PwObjectTracker {
+        objects: soundPill.sink ? [soundPill.sink] : []
+    }
+
     function getVolumeIcon(vol, muted) {
         if (muted) return "../icons/volume-x.svg";
         if (vol >= 50) return "../icons/volume-2.svg";
