@@ -104,6 +104,7 @@ Scope {
                 MemoryWidget {}
                 BatteryWidget {}
                 ClockWidget {}
+                NotificationWidget {}
             }
         }
     }

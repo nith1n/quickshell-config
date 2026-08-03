@@ -9,7 +9,26 @@ Item {
     implicitWidth: wsRow.implicitWidth
     implicitHeight: Theme.wsSize
 
-    // Sliding Active Accent Pill
+    // Level 0: Inactive workspace button backgrounds
+    Row {
+        id: bgRow
+        spacing: Theme.wsSpacing
+        z: 0
+
+        Repeater {
+            model: Hyprland.workspaces.values
+
+            Rectangle {
+                width: Theme.wsSize
+                height: Theme.wsSize
+                radius: Theme.wsRadius
+                property bool haveWindows: modelData.toplevels.values.length > 0
+                color: haveWindows ? Theme.pillBg : "transparent"
+            }
+        }
+    }
+
+    // Level 1: Sliding Active Accent Pill (glides ON TOP of inactive backgrounds)
     Rectangle {
         id: activeIndicator
         width: Theme.wsSize
@@ -17,18 +36,19 @@ Item {
         radius: Theme.wsRadius
         color: Theme.accent
         visible: Hyprland.focusedWorkspace !== null
-        z: 0
+        z: 1
 
-        // Smooth sliding animation when switching workspaces
+        // Smooth sliding animation across workspace buttons
         Behavior on x {
             NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
         }
     }
 
+    // Level 2: Workspace numbers & mouse interaction (above activeIndicator)
     Row {
         id: wsRow
         spacing: Theme.wsSpacing
-        z: 1
+        z: 2
 
         Repeater {
             model: Hyprland.workspaces.values
@@ -37,16 +57,12 @@ Item {
                 id: ws
                 width: Theme.wsSize
                 height: Theme.wsSize
-                radius: Theme.wsRadius
+                color: "transparent"
 
                 property bool active: Hyprland.focusedWorkspace?.id === modelData.id
                 property bool haveWindows: modelData.toplevels.values.length > 0
 
-                // Inactive workspace colors (active state is covered by activeIndicator)
-                color: haveWindows && !active ? Theme.pillBg : "transparent"
-                border.width: 0
-
-                // Synchronize activeIndicator position on workspace switch or layout positioning
+                // Synchronize activeIndicator position on workspace switch or layout update
                 onActiveChanged: {
                     if (active) {
                         activeIndicator.x = ws.x
