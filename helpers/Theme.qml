@@ -6,19 +6,47 @@ import QtQuick
 QtObject {
     readonly property string fontFamily: "JetBrains Mono"
 
-    // Backgrounds (Miles Morales Dark Theme)
-    readonly property color barBg: "#07070a"          // Matte pitch-black background
-    readonly property color pillBg: "#12131a"         // Deep charcoal suit-mesh widget container
-    readonly property color pillBgHover: "#1d1f2b"    // Light charcoal suit-mesh hover highlight
+    // Active theme selection: "dark" (Miles Morales) or "light" (Gwen Stacy)
+    property string activeTheme: "dark"
 
-    // Accents & Texts
-    readonly property color accent: "#ec1d23"         // Vibrant neon spray crimson red
-    readonly property color text: "#ffffff"           // Spider web pure white
-    readonly property color textMuted: "#62667d"      // Graffiti shadow muted blue-gray
+    // Multi-Theme Color Palettes
+    readonly property var themes: ({
+        // Miles Morales Dark Theme
+        "dark": {
+            barBg: "#07070a",          // Matte pitch-black background
+            pillBg: "#12131a",         // Deep charcoal suit-mesh container
+            pillBgHover: "#1d1f2b",    // Light charcoal hover highlight
+            accent: "#ec1d23",         // Vibrant neon spray crimson red
+            text: "#ffffff",           // Spider web pure white
+            textMuted: "#62667d",      // Graffiti shadow muted blue-gray
+            success: "#00f5c6",        // Electric neon teal
+            danger: "#ff1744"          // Warning neon red
+        },
+        // Gwen Stacy Light Theme (Ghost-Spider Across the Spider-Verse)
+        "light": {
+            barBg: "#eef1f6",          // Clean Ghost-Spider off-white background
+            pillBg: "#ffffff",         // Pure white suit container
+            pillBgHover: "#e0e5ef",    // Soft cyan-tinted hover highlight
+            accent: "#e60067",         // Vibrant Ghost-Spider neon magenta-pink
+            text: "#0f172a",           // Midnight slate high-contrast text
+            textMuted: "#64748b",      // Soft slate gray
+            success: "#00c8b3",        // Neon cyan teal (Gwen ballet accent)
+            danger: "#dc2626"          // Warning crimson red
+        }
+    })
 
-    // Status colors
-    readonly property color success: "#00f5c6"        // Electric neon teal (connected/charging)
-    readonly property color danger: "#ff1744"         // Warning neon red
+    // Active palette resolver (with fallback to dark)
+    readonly property var palette: themes[activeTheme] || themes["dark"]
+
+    // Dynamic Color Tokens
+    readonly property color barBg: palette.barBg
+    readonly property color pillBg: palette.pillBg
+    readonly property color pillBgHover: palette.pillBgHover
+    readonly property color accent: palette.accent
+    readonly property color text: palette.text
+    readonly property color textMuted: palette.textMuted
+    readonly property color success: palette.success
+    readonly property color danger: palette.danger
 
     // Sizes
     readonly property real fontSize: 10
