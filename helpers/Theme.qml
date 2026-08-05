@@ -2,15 +2,27 @@
 pragma Singleton
 
 import QtQuick
+import "../generated"
 
 QtObject {
     readonly property string fontFamily: "JetBrains Mono"
 
-    // Active theme selection: "dark" (Miles Morales) or "light" (Gwen Stacy)
-    property string activeTheme: "dark"
+    // Active theme selection: "dark", "light", or "matugen"
+    property string activeTheme: "matugen"
 
     // Multi-Theme Color Palettes
     readonly property var themes: ({
+        // Matugen Dynamic Theme (from wallpaper)
+        "matugen": {
+            barBg: Colors.background,
+            pillBg: Colors.surfaceContainer,
+            pillBgHover: Colors.surfaceContainerHigh,
+            accent: Colors.primary,
+            text: Colors.on_surface,
+            textMuted: Colors.outline,
+            success: Colors.secondary,
+            danger: Colors.error
+        },
         // Miles Morales Dark Theme
         "dark": {
             barBg: "#07070a",          // Matte pitch-black background
@@ -35,8 +47,8 @@ QtObject {
         }
     })
 
-    // Active palette resolver (with fallback to dark)
-    readonly property var palette: themes[activeTheme] || themes["dark"]
+    // Active palette resolver (with fallback to matugen)
+    readonly property var palette: themes[activeTheme] || themes["matugen"]
 
     // Dynamic Color Tokens
     readonly property color barBg: palette.barBg
