@@ -45,10 +45,10 @@ Rectangle {
         }
     }
 
-    // Process to toggle bluetooth
+    // Process to open blueman-manager
     Process {
-        id: toggleProc
-        command: ["rfkill", "toggle", "bluetooth"]
+        id: managerProc
+        command: ["blueman-manager"]
         onExited: {
             rfkillFile.reload();
             checkConnectedProc.running = true;
@@ -111,7 +111,12 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton
-        onClicked: toggleProc.running = true
+
+        onClicked: {
+            if (!managerProc.running) {
+                managerProc.running = true;
+            }
+        }
 
         onEntered: btPill.color = Theme.pillBgHover
         onExited: btPill.color = Theme.pillBg
