@@ -13,13 +13,24 @@ Rectangle {
 
     // Functions
     function parseMeminfo(text) {
-        if (!text) return { ram: 0, swap: 0 };
+        if (!text) {
+            return {
+                ram: 0,
+                ramUsedGB: "0.0",
+                ramTotalGB: "0.0",
+                ramRatio: 0,
+                swap: 0,
+                swapUsedGB: "0.0",
+                swapTotalGB: "0.0",
+                swapRatio: 0
+            };
+        }
         var lines = text.split("\n");
         var memTotal = 0;
         var memAvailable = 0;
         var swapTotal = 0;
         var swapFree = 0;
-        
+
         for (var i = 0; i < lines.length; i++) {
             var line = lines[i];
             if (line.startsWith("MemTotal:")) {
@@ -32,18 +43,27 @@ Rectangle {
                 swapFree = parseInt(line.match(/\d+/)[0]);
             }
         }
-        
-        var ramUsed = 0;
-        if (memTotal > 0) {
-            ramUsed = Math.round((1 - memAvailable / memTotal) * 100);
-        }
-        
-        var swapUsed = 0;
-        if (swapTotal > 0) {
-            swapUsed = Math.round((1 - swapFree / swapTotal) * 100);
-        }
-        
-        return { ram: ramUsed, swap: swapUsed };
+
+        var ramUsed = Math.max(0, memTotal - memAvailable);
+        var ramPercent = memTotal > 0 ? Math.round((ramUsed / memTotal) * 100) : 0;
+        var ramUsedGB = (ramUsed / 1048576).toFixed(1);
+        var ramTotalGB = (memTotal / 1048576).toFixed(1);
+
+        var swapUsed = Math.max(0, swapTotal - swapFree);
+        var swapPercent = swapTotal > 0 ? Math.round((swapUsed / swapTotal) * 100) : 0;
+        var swapUsedGB = (swapUsed / 1048576).toFixed(1);
+        var swapTotalGB = (swapTotal / 1048576).toFixed(1);
+
+        return {
+            ram: ramPercent,
+            ramUsedGB: ramUsedGB,
+            ramTotalGB: ramTotalGB,
+            ramRatio: memTotal > 0 ? (ramUsed / memTotal) : 0,
+            swap: swapPercent,
+            swapUsedGB: swapUsedGB,
+            swapTotalGB: swapTotalGB,
+            swapRatio: swapTotal > 0 ? (swapUsed / swapTotal) : 0
+        };
     }
 
     // Backend Helpers & Resources
@@ -95,7 +115,24 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         hoverEnabled: true
+        acceptedButtons: Qt.LeftButton
+
+        onClicked: {
+            meminfoFile.reload();
+            memoryPopup.visible = !memoryPopup.visible;
+        }
+
         onEntered: memoryPill.color = Theme.pillBgHover
         onExited: memoryPill.color = Theme.pillBg
+    }
+
+    // -------------------------------------------------------------------------
+    // Memory Details Popup
+    // -------------------------------------------------------------------------
+
+    MemoryMenu {
+        id: memoryPopup
+        anchor.item: memoryPill
+        memData: memoryPill.memData
     }
 }
