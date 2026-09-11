@@ -10,10 +10,18 @@ Rectangle {
     // Properties
     readonly property string capacityText: capacityFile.text() ? capacityFile.text().trim() : "100"
     readonly property string statusText: statusFile.text() ? statusFile.text().trim() : "Unknown"
+    readonly property bool isCharging: {
+        if (statusText === "Charging") return true;
+        if (statusText === "Full" || statusText === "Not charging") {
+            const ac = acFile.text() ? acFile.text().trim() : "";
+            return ac !== "0";
+        }
+        return false;
+    }
 
     // Functions
     function getBatteryIcon(percentageStr, status) {
-        if (status === "Charging") {
+        if (batteryPill.isCharging) {
             return "../icons/battery-charging.svg";
         }
         return "../icons/battery.svg";
@@ -24,7 +32,7 @@ Rectangle {
         var p = parseInt(percentageStr);
         if (isNaN(p)) p = 100;
 
-        if (status === "Charging") {
+        if (batteryPill.isCharging) {
             return Theme.success;
         }
         if (p < 20) {
@@ -44,6 +52,11 @@ Rectangle {
         path: "/sys/class/power_supply/BAT0/status"
     }
 
+    FileView {
+        id: acFile
+        path: "/sys/class/power_supply/AC/online"
+    }
+
     // Timer to poll sysfs nodes every 10 seconds (sysfs doesn't support inotify)
     Timer {
         id: pollTimer
@@ -53,6 +66,7 @@ Rectangle {
         onTriggered: {
             capacityFile.reload()
             statusFile.reload()
+            acFile.reload()
         }
     }
 
