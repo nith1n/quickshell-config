@@ -97,6 +97,7 @@ Scope {
                 anchors.verticalCenter: barBackground.verticalCenter
                 spacing: Theme.widgetSpacing
 
+                MusicWidget {}
                 SoundWidget {}
                 BrightnessWidget {}
                 WifiWidget {}
