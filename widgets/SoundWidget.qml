@@ -92,6 +92,7 @@ Rectangle {
             color: soundPill.isMuted ? Theme.danger : Theme.accent
             font.family: "Symbols Nerd Font"
             font.pixelSize: 15
+            rightPadding: 4
             anchors.verticalCenter: parent.verticalCenter
         }
 
