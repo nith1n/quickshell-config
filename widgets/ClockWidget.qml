@@ -41,7 +41,19 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         hoverEnabled: true
+        acceptedButtons: Qt.LeftButton
+        onClicked: calendarPopup.visible = !calendarPopup.visible
+
         onEntered: clockPill.color = Theme.pillBgHover
         onExited: clockPill.color = Theme.pillBg
+    }
+
+    // -------------------------------------------------------------------------
+    // Calendar Details Popup
+    // -------------------------------------------------------------------------
+
+    CalendarMenu {
+        id: calendarPopup
+        anchor.item: clockPill
     }
 }
