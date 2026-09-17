@@ -8,4 +8,5 @@ Scope {
     RightSidebar {}
     BottomBar {}
     CornerPopup {}
+    NotificationOverlay {}
 }
